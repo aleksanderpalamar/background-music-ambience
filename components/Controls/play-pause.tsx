@@ -40,7 +40,7 @@ export const PlayPause = () => {
   }
 
   return (
-    <div className="tooltip" data-tip="Play/Pause">
+    <div className="tooltip">
       <Button
         className="bg-transparent border-none hover:bg-zinc-900/10 rounded-full p-2"
         onClick={() => playPauseMedia("video")}
