@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useEffect } from "react";
+
+import { PlayerContext } from "@/context/player-context";
+import React, { useContext, useEffect } from "react";
 
 declare global {
   interface Window {
@@ -12,9 +14,11 @@ declare global {
 const IdVideo = "jEh6wBZiyJo"
 
 export function YouTubePlayer() {
+  const { setPlayer } = useContext(PlayerContext);
+
   useEffect(() => {
     function onYouTubeIframeAPIReady() {
-      new window.YT.Player("player", {
+      const player = new window.YT.Player("player", {
         videoId: IdVideo,
         playerVars: {
           controls: 0,
@@ -32,6 +36,8 @@ export function YouTubePlayer() {
           onReady: onPlayerReady,
         },
       });
+
+      setPlayer(player);
     }
 
     function onPlayerReady(event: any) {
@@ -51,10 +57,10 @@ export function YouTubePlayer() {
     return () => {
       // Clean up the global function when component unmounts
       window.onYouTubeIframeAPIReady = undefined;
-    };
-  }, []);
+    };    
+  }, [setPlayer]);  
 
   return (
-    <div id="player" className="fixed top-0 left-0 w-full h-full scale-125" />
+    <div id="player" className="fixed top-0 left-0 w-full h-full scale-125 pointer-events-none" />
   );
 }
