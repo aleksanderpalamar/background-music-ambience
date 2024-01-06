@@ -3,10 +3,18 @@
 import { StopCircle } from "lucide-react";
 import { Button } from "../ui/button";
 import { useContext } from "react";
-import { PlayerContext } from "@/context/player-context";
+import { AudioContext } from "@/context/audio-context";
 
 export const StopAllSounds = () => {
-  const { stopAllSounds } = useContext(PlayerContext);  
+  const audioObjects = useContext(AudioContext);
+  const { playingAudios, setPlayingAudios } = useContext(AudioContext);
+
+  function stopAllSounds() {
+    playingAudios.forEach((audio) => audio.pause());
+    setPlayingAudios([]);
+
+    console.log("stop all sounds");    
+  }
 
   return (
     <div className="tooltip">
